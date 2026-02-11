@@ -1,0 +1,13 @@
+datasets
+trl
+bitsandbytes
+transformers
+accelerate
+peft
+torch
+tqdm
+huggingface_hub
+ipykernel
+ipywidgets
+jupyterlab
+notebook
