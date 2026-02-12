@@ -246,8 +246,8 @@ def main() -> None:
     # Editable configuration block
     # Modify these values directly instead of passing CLI arguments.
     # ======================================================================
-    run_id = 1
-    checkpoint_idx = 875
+    run_id = 2
+    checkpoint_idx = 1246
     submission_path = Path(
         f"/home/bfu3205/Project/396-pilot-project/runs/run_{run_id}/bfu3205_{checkpoint_idx}.txt"
     )
