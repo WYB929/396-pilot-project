@@ -246,18 +246,27 @@ def main() -> None:
     # Editable configuration block
     # Modify these values directly instead of passing CLI arguments.
     # ======================================================================
-    run_id = 3
+    run_id = 1
     checkpoint_idx = 1869
-    submission_path = Path(
-        f"/home/bfu3205/Project/396-pilot-project/runs/run_{run_id}/bfu3205_{checkpoint_idx}.txt"
-    )
+    model = "Qwen"
+    if model == "Llama":
+        submission_path = Path(
+            f"/home/bfu3205/Project/396-pilot-project/runs/run_{run_id}/bfu3205_{checkpoint_idx}.txt"
+        )
+        # Optional JSON report path. Set to None to disable file output.
+        output_json_path: Path | None = Path(
+            f"/home/bfu3205/Project/396-pilot-project/runs/run_{run_id}/eval_result_{checkpoint_idx}.json"
+        )
+    else:
+        submission_path = Path(
+            f"/home/bfu3205/Project/396-pilot-project/runs/run_qwen_{run_id}/bfu3205_{checkpoint_idx}.txt"
+        )
+        # Optional JSON report path. Set to None to disable file output.
+        output_json_path: Path | None = Path(
+            f"/home/bfu3205/Project/396-pilot-project/runs/run_qwen_{run_id}/eval_result_{checkpoint_idx}.json"
+        )
     data_dir = Path("/home/bfu3205/Project/396-pilot-project/data")
     gsm8k_public_jsonl_path = data_dir / "gsm8k_test_public.jsonl"
-
-    # Optional JSON report path. Set to None to disable file output.
-    output_json_path: Path | None = Path(
-        f"/home/bfu3205/Project/396-pilot-project/runs/run_{run_id}/eval_result_{checkpoint_idx}.json"
-    )
 
     # Index mapping inside submission list.
     # Default notebook layout:
