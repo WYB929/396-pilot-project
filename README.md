@@ -2,7 +2,7 @@
 
 Project member: Yibin Wang, Hongyuan Xu, Zheyu Fan
 
-## Environment Setup (conda + pip)
+## Environment Setup (manual)
 
 ```bash
 conda create -n 396-pilot-project python=3.12 -y
@@ -11,34 +11,75 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Fine-tuning
+## Reproduce Report Results (single command)
 
-Run the notebook:
+Use `reproduce.sh` to automatically:
+1. create/use a local venv,
+2. install dependencies,
+3. download model checkpoint + datasets from Hugging Face,
+4. run inference,
+5. run evaluation and save metrics JSON.
+
+Checkpoint mode (re-generate predictions from adapter checkpoint):
+
+```bash
+bash reproduce.sh \
+  --mode checkpoint \
+  --run-name run_qwen_1 \
+  --checkpoint 1869 \
+  --data-repo <YOUR_HF_DATASET_REPO> \
+  --model-repo <YOUR_HF_MODEL_REPO>
+```
+
+Frozen mode (evaluate uploaded prediction file directly for exact-number replay):
+
+```bash
+bash reproduce.sh \
+  --mode frozen \
+  --run-name run_qwen_1 \
+  --checkpoint 1869 \
+  --data-repo <YOUR_HF_DATASET_REPO> \
+  --artifact-repo <YOUR_HF_ARTIFACT_REPO>
+```
+
+If repos are private:
+
+```bash
+export HF_TOKEN=hf_xxx
+```
+
+Output files:
+- submission txt: `runs/<run-name>/bfu3205_<checkpoint>.txt`
+- metrics json: `runs/<run-name>/eval_result_<checkpoint>.json`
+
+## Evaluate Existing Local Submission
+
+You can evaluate a local prediction file directly:
+
+```bash
+python evaluate_metrics.py \
+  --submission-path runs/run_qwen_1/bfu3205_1869.txt \
+  --data-dir data \
+  --output-json-path runs/run_qwen_1/eval_result_1869.json
+```
+
+Skip safety model if you only want GSM8K accuracy:
+
+```bash
+python evaluate_metrics.py \
+  --submission-path runs/run_qwen_1/bfu3205_1869.txt \
+  --data-dir data \
+  --skip-safety
+```
+
+## Notebook Training
 
 ```bash
 jupyter notebook Pilot_Project_Fine_tuning_Leads_to_Forgetting.ipynb
 ```
 
-Essential variables to check before running:
+## Hugging Face Setup Guide
 
-- `run_idx`: selects output folder `runs/run_{run_idx}`.
-- `checkpoint_idx`: used to build `ADAPTER_PATH = checkpoint-{checkpoint_idx}`.
-- `OUTPUT_DIR`: where checkpoints/predictions are written.
-- `ADAPTER_PATH`: which checkpoint is loaded for inference in notebook.
-- `CHECKPOINT_STEP`: optional override to test a different checkpoint during inference (`None` means use `ADAPTER_PATH`).
-- `STUDENT_ID`: output filename prefix for submission export.
+See detailed first-time instructions:
 
-## Evaluation
-
-Run:
-
-```bash
-python evaluate_metrics.py
-```
-
-Essential variables in `evaluate_metrics.py`:
-
-- `run_id`: selects run folder under `runs/run_{run_id}`.
-- `checkpoint_idx`: selects prediction file like `bfu3205_{checkpoint_idx}.txt`.
-- `print_safeguard_outputs`: set `True` to print all safeguard model raw outputs for sanity check, `False` to reduce logs.
-- `skip_safety`: set `True` to skip safety evaluation (math-only check), `False` to run full evaluation.
+`HUGGINGFACE_SETUP.md`
