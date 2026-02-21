@@ -11,7 +11,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-## Reproduce Report Results (single command)
+## Reproduce Report Results (single command; ready-to-run script)
 
 Use `reproduce.sh` to automatically:
 1. create/use a local venv,
@@ -27,25 +27,20 @@ bash reproduce.sh \
   --mode checkpoint \
   --run-name run_qwen_1 \
   --checkpoint 1869 \
-  --data-repo <YOUR_HF_DATASET_REPO> \
-  --model-repo <YOUR_HF_MODEL_REPO>
+  --data-repo YBW929/396-pilot-data \
+  --model-repo YBW929/396-pilot-checkpoints
 ```
 
 Frozen mode (evaluate uploaded prediction file directly for exact-number replay):
+We recommend to use this commend to reproduce exact results in our report. 
 
 ```bash
 bash reproduce.sh \
   --mode frozen \
   --run-name run_qwen_1 \
   --checkpoint 1869 \
-  --data-repo <YOUR_HF_DATASET_REPO> \
-  --artifact-repo <YOUR_HF_ARTIFACT_REPO>
-```
-
-If repos are private:
-
-```bash
-export HF_TOKEN=hf_xxx
+  --data-repo YBW929/396-pilot-data \
+  --artifact-repo YBW929/396-pilot-artifacts
 ```
 
 Output files:
