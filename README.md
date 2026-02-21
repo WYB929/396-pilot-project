@@ -20,6 +20,12 @@ Use `reproduce.sh` to automatically:
 4. run inference,
 5. run evaluation and save metrics JSON.
 
+NOTE: We have 4 runs corresponding to different model and experiment:
+- `run_1` is the run of Llama model for simple baseline.
+- `run_2` is the run of Llama model for medium baseline.
+- `run_3` is the run of Llama model for strong baseline.
+- `run_qwen_1` is the run of Qwen model with all fine-tune tricks implemented to solve strong baseline (to evaluate whether changing the backbone improves performance).
+
 Checkpoint mode (re-generate predictions from adapter checkpoint):
 
 ```bash
