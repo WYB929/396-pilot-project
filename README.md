@@ -21,24 +21,14 @@ Use `reproduce.sh` to automatically:
 5. run evaluation and save metrics JSON.
 
 NOTE: We have 4 runs corresponding to different model and experiment:
-- `run_1` is the run of Llama model for simple baseline.
-- `run_2` is the run of Llama model for medium baseline.
-- `run_3` is the run of Llama model for strong baseline.
-- `run_qwen_1` is the run of Qwen model with all fine-tune tricks implemented to solve strong baseline (to evaluate whether changing the backbone improves performance).
-
-Checkpoint mode (re-generate predictions from adapter checkpoint):
-
-```bash
-bash reproduce.sh \
-  --mode checkpoint \
-  --run-name run_qwen_1 \
-  --checkpoint 1869 \
-  --data-repo YBW929/396-pilot-data \
-  --model-repo YBW929/396-pilot-checkpoints
-```
+- `run_1` is the run of Llama model for simple baseline. (checkpoint step for test: 623)
+- `run_2` is the run of Llama model for medium baseline. (checkpoint step for test: 1246)
+- `run_3` is the run of Llama model for strong baseline. (checkpoint step for test: 1869)
+- `run_qwen_1` is the run of Qwen model with all fine-tune tricks implemented to solve strong baseline (to evaluate whether changing the backbone improves performance). (checkpoint step for test: 1869)
 
 Frozen mode (evaluate uploaded prediction file directly for exact-number replay):
-We recommend to use this commend to reproduce exact results in our report. 
+
+#### We recommend to use this commend to reproduce exact results in our report. 
 
 ```bash
 bash reproduce.sh \
@@ -47,6 +37,19 @@ bash reproduce.sh \
   --checkpoint 1869 \
   --data-repo YBW929/396-pilot-data \
   --artifact-repo YBW929/396-pilot-artifacts
+```
+
+Checkpoint mode (re-generate predictions from adapter checkpoint):
+
+#### This command takes longer time than frozen mode
+
+```bash
+bash reproduce.sh \
+  --mode checkpoint \
+  --run-name run_qwen_1 \
+  --checkpoint 1869 \
+  --data-repo YBW929/396-pilot-data \
+  --model-repo YBW929/396-pilot-checkpoints
 ```
 
 Output files:
